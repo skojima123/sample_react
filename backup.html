@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello React</title>
+</head>
+<body>
+<div id="app">
+</div>
+<div id="countdown"></div>
+
+<script src="react/build/react.js"></script>
+<script>
+    React.render(
+            React.DOM.h1(
+                    {
+                        id: "h1-header"
+                    },
+                    "Hello Tokyo!"),
+            document.getElementById("app")
+    );
+
+    var CountDown = React.createClass({
+        getInitialState: function(){
+            return {
+                timeRemaining: 10
+            }
+        },
+        tick: function(){
+            var actualTimeRemaining = this.state.timeRemaining - 1;
+            if (actualTimeRemaining == 0){
+                this.setState({timeRemaining: 'Boom'})
+                clearInterval(this.interval)
+            } else {
+                this.setState({timeRemaining: actualTimeRemaining})
+            }
+        },
+        componentDidMount: function(){
+            this.interval = setInterval(this.tick, 1000);
+        },
+        render: function () {
+            if (this.state.timeRemaining === 'Boom'){
+                return <p><img src="images/firework_icon.gif"></p>;
+            }
+            return this.state.timeRemaining;
+
+
+        }
+    });
+
+    ReactDOM.render(
+            <CountDown />,
+            document.getElementById('countdown')
+    );
+
+</script>
+</body>
+</html>
